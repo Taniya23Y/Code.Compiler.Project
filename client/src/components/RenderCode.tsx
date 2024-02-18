@@ -24,8 +24,8 @@ export default function RenderCode() {
    )}`;
 
   return (
-    <div>
-      <iframe src={iframeCode} />
+    <div className="bg-white border-2 border-red-500 h-full">
+      <iframe className="w-full h-full" src={iframeCode} />
     </div>
   );
 }
