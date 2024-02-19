@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-interface IcodeSchema {
+interface ICodeSchema {
   fullCode: {
     html: string;
     css: string;
     javascript: string;
   };
 }
-const CodeSchema = new mongoose.Schema<IcodeSchema>({
+const CodeSchema = new mongoose.Schema<ICodeSchema>({
   fullCode: {
     html: String,
     css: String,

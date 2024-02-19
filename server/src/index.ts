@@ -11,6 +11,11 @@ config();
 
 app.use("/compiler", compilerRouter);
 
+// Define a route handler for the root path ("/")
+// app.get("/", (req, res) => {
+//   res.send("OK!");
+// });
+
 dbConnect();
 app.listen(4000, () => {
   console.log("http://localhost:4000");
