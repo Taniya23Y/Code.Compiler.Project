@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { Code } from "../models/Code";
 
 export const saveCode = async (req: Request, res: Response) => {
-  const {fullCode} = req.body
+  const { fullCode } = req.body;
   try {
     const newCode = await Code.create({
       fullCode: fullCode,

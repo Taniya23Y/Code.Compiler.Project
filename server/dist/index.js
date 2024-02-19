@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 app.get("/", (req, res) => {
-    return res.status(200).send("OK!");
+    return res.status(200).send("Ok!");
 });
 app.listen(4000, () => {
-    console.log("https://localhost:4000");
+    console.log("http://localhost:4000");
 });
