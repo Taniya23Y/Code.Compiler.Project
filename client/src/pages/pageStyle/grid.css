@@ -17,7 +17,7 @@
       var(--color) var(--gap)
     );
   background-size: var(--gap) var(--gap);
- */
+}*/
 
   background: linear-gradient(
     45deg,
@@ -30,7 +30,7 @@
   overflow: hidden;
 }
 
-.container::before {
+.grid-bg::before {
   content: "";
   position: absolute;
   width: 100%;
