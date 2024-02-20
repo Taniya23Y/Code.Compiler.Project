@@ -1,4 +1,4 @@
-import { Save, Share2 } from "lucide-react";
+import { Code, Copy, Loader2, Save, Share2 } from "lucide-react";
 import { Button } from "./ui/button";
 
 import {
@@ -17,21 +17,34 @@ import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function HelperHeader() {
+  const [saveLoading, setSaveLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const fullCode = useSelector(
     (state: RootState) => state.compilerSlice.fullCode
   );
   const handleSaveCode = async () => {
+    setSaveLoading(true);
     try {
       const response = await axios.post("http://localhost:4000/compiler/save", {
         fullCode: fullCode,
       });
-      console.log(response.data);
-      navigate(response.data.url);
+      // console.log(response.data);
+      navigate(`/compiler/${response.data.url}`, { replace: true });
     } catch (error) {
       handleError(error);
+    } finally {
+      setSaveLoading(false);
     }
   };
   const dispatch = useDispatch();
@@ -45,17 +58,47 @@ export default function HelperHeader() {
           onClick={handleSaveCode}
           className="flex justify-between items-center gap-1"
           variant="success"
+          disabled={saveLoading}
         >
-          <Save size={16} />
-          Save
+          {saveLoading ? (
+            <>
+              <Loader2 className="animate-spin" /> Saving
+            </>
+          ) : (
+            <>
+              <Save size={16} />
+              Save
+            </>
+          )}
         </Button>
-        <Button
-          className="flex justify-between items-center gap-1"
-          variant="secondary"
-        >
-          <Share2 size={16} />
-          Share
-        </Button>
+        <Dialog>
+          <DialogTrigger className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 flex justify-center items-center gap1">
+            <Share2 size={16} />
+            Share
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="flex gap-1 justify-center items-center">
+                <Code />
+                Share Your Code
+              </DialogTitle>
+              <DialogDescription className="flex flex-col gap-2">
+                <div className="__url flex gap-1">
+                  <input
+                    type="text"
+                    disabled
+                    className="w-full px-2 py-2 rounded bg-slate-800 text-slate-400 select-none"
+                    value={window.location.href}
+                  />
+                  <Button variant="outline"><Copy size={14} /></Button>
+                </div>
+                <p className="text-center">
+                  Share this URL with your frds to Collaborate.
+                </p>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="__tab_switcher flex justify-center items-center gap-1">
         <small>Current Language:</small>
