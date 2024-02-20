@@ -26,6 +26,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export default function HelperHeader() {
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
@@ -90,7 +91,17 @@ export default function HelperHeader() {
                     className="w-full px-2 py-2 rounded bg-slate-800 text-slate-400 select-none"
                     value={window.location.href}
                   />
-                  <Button variant="outline"><Copy size={14} /></Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      window.navigator.clipboard.writeText(
+                        window.location.href
+                      );
+                      toast("URL Copied to your clipboard!");
+                    }}
+                  >
+                    <Copy size={14} />
+                  </Button>
                 </div>
                 <p className="text-center">
                   Share this URL with your frds to Collaborate.
