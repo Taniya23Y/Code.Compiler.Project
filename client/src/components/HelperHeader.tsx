@@ -16,15 +16,20 @@ import {
 import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function HelperHeader() {
-  const fullCode = useSelector((state:RootState)=>state.compilerSlice.fullCode) 
+  const navigate = useNavigate();
+  const fullCode = useSelector(
+    (state: RootState) => state.compilerSlice.fullCode
+  );
   const handleSaveCode = async () => {
     try {
       const response = await axios.post("http://localhost:4000/compiler/save", {
-        fullCode:fullCode,
+        fullCode: fullCode,
       });
       console.log(response.data);
+      navigate(response.data.urlId);
     } catch (error) {
       handleError(error);
     }
@@ -37,7 +42,7 @@ export default function HelperHeader() {
     <div className="__helper_header h-[50px] bg-black text-white p-2 flex justify-between items-center">
       <div className="__btn_container flex gap-1">
         <Button
-        onClick={handleSaveCode}
+          onClick={handleSaveCode}
           className="flex justify-between items-center gap-1"
           variant="success"
         >

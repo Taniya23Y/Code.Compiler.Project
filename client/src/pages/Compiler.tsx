@@ -6,9 +6,13 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { useParams } from "react-router-dom";
 
 export default function Compiler() {
   // return <div>Compiler</div>;
+  const {urlId} = useParams()
+  console.log(urlId);
+
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel
