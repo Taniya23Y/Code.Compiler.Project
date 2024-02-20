@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Compiler" element={<Compiler />} />
+          <Route path="/Compiler/:urlId" element={<Compiler />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ThemeProvider>

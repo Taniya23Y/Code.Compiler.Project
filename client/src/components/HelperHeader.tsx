@@ -29,7 +29,7 @@ export default function HelperHeader() {
         fullCode: fullCode,
       });
       console.log(response.data);
-      navigate(response.data.urlId);
+      navigate(response.data.url);
     } catch (error) {
       handleError(error);
     }
