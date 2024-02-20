@@ -12,6 +12,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function Compiler() {
   // return <div>Compiler</div>;
@@ -24,8 +25,12 @@ export default function Compiler() {
         urlId: urlId,
       });
       dispatch(updateFullCode(response.data.fullCode));
-      console.log(response.data);
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 500) {
+          toast("Invalid URL, default code Loaded");
+        }
+      }
       handleError(error);
     }
   };

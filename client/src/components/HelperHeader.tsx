@@ -16,8 +16,8 @@ import {
 import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -30,10 +30,19 @@ import { toast } from "sonner";
 
 export default function HelperHeader() {
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
+  const [shareBtn, setShareBtn] = useState<boolean>(false);
   const navigate = useNavigate();
   const fullCode = useSelector(
     (state: RootState) => state.compilerSlice.fullCode
   );
+  const { urlId } = useParams();
+  useEffect(() => {
+    if (urlId) {
+      setShareBtn(true);
+    } else {
+      setShareBtn(false);
+    }
+  }, [urlId]);
   const handleSaveCode = async () => {
     setSaveLoading(true);
     try {
@@ -72,7 +81,8 @@ export default function HelperHeader() {
             </>
           )}
         </Button>
-        <Dialog>
+        {shareBtn && (
+          <Dialog>
           <DialogTrigger className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 flex justify-center items-center gap1">
             <Share2 size={16} />
             Share
@@ -110,6 +120,7 @@ export default function HelperHeader() {
             </DialogHeader>
           </DialogContent>
         </Dialog>
+        )}
       </div>
       <div className="__tab_switcher flex justify-center items-center gap-1">
         <small>Current Language:</small>
