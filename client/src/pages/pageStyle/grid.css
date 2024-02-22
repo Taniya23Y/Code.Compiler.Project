@@ -1,5 +1,5 @@
 .grid-bg {
-  /* background: #000000;
+  background: #000000;
   --gap: 5em;
   --line: 1px;
   --color: rgba(255, 255, 255, 0.2);
@@ -17,20 +17,21 @@
       var(--color) var(--gap)
     );
   background-size: var(--gap) var(--gap);
-}*/
+}
 
+/*
   background: linear-gradient(
     45deg,
     #3498db,
     #2ecc71
-  ); /* Gradient background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-  border-radius: 10px; /* Rounded corners */
+  ); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-radius: 10px; 
   position: relative;
   overflow: hidden;
-}
+  }
 
-.grid-bg::before {
+ .grid-bg::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -42,5 +43,6 @@
     ),
     linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
-  pointer-events: none; /* Allow clicking through the pattern layer */
-}
+  pointer-events: none; 
+ }
+*/
