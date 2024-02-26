@@ -2,11 +2,20 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { handleError } from "@/utils/handleError";
 
 export default function Header() {
   const isLoggedIn = -useSelector(
     (state: RootState) => state.appSlice.isLoggedIn
   );
+
+  async function handleLogout(){
+    try {
+      console.log("object");
+    } catch (error) {
+      handleError(error);
+    }
+  }
   return (
     <nav className="w-full h-[60px] bg-gray-900 text-white p-3 flex justify-between items-center">
       <Link to="/">
@@ -19,7 +28,11 @@ export default function Header() {
           </Link>
         </li>
         {isLoggedIn ? (
-          <></>
+          <>
+             <li>
+               <Button onClick={handleLogout} variant="destructive">Logout</Button>
+            </li>
+          </>
         ) : (
           <>
             <li>
