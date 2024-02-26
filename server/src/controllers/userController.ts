@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import { AuthRequest } from "../middlewares/verifyToken";
 
 export const signup = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -91,3 +92,13 @@ export const logout = async (req: Request, res: Response) => {
     return res.status(500).send({ message: "Error logging out!", error });
   }
 };
+
+export const userDetails = async (req: AuthRequest, res: Response ) => {
+  const userId = req._id;
+  console.log(userId);
+  try {
+    
+  } catch (error) {
+    return res.status(500).send({ message: "cannot fetch user details"});
+  }
+}
