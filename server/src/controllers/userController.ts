@@ -76,7 +76,7 @@ export const login = async (req: Request, res: Response) => {
         username: existingUser.username,
         picture: existingUser.picture,
         email: existingUser.email,
-        savedCodes: existingUser.saveCodes,
+        savedCodes: existingUser.savedCodes,
       });
   } catch (error) {
     return res.status(500).send({ message: "Error log in!", error: error });
