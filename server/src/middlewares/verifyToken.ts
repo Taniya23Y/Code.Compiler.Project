@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 
-interface AuthRequest extends Request {
-    _id: string;
+export interface AuthRequest extends Request {
+    _id?: string;
 }
 
 exports.verifyToken = async (

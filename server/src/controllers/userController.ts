@@ -71,14 +71,12 @@ export const login = async (req: Request, res: Response) => {
       sameSite: "lax",
     });
 
-    return res
-      .status(200)
-      .send({
-        username: existingUser.username,
-        picture: existingUser.picture,
-        email: existingUser.email,
-        savedCodes: existingUser.saveCodes,
-      });
+    return res.status(200).send({
+      username: existingUser.username,
+      picture: existingUser.picture,
+      email: existingUser.email,
+      savedCodes: existingUser.saveCodes,
+    });
   } catch (error) {
     return res.status(500).send({ message: "Error log in!", error: error });
   }
@@ -93,12 +91,22 @@ export const logout = async (req: Request, res: Response) => {
   }
 };
 
-export const userDetails = async (req: AuthRequest, res: Response ) => {
+export const userDetails = async (req: AuthRequest, res: Response) => {
   const userId = req._id;
-  console.log(userId);
   try {
-    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: "cannot find the user!" });
+    }
+    return res
+      .status(200)
+      .send({
+        username: user.username,
+        picture: user.picture,
+        email: user.email,
+        savedCodes: user.saveCodes,
+      });
   } catch (error) {
-    return res.status(500).send({ message: "cannot fetch user details"});
+    return res.status(500).send({ message: "cannot fetch user details" });
   }
-}
+};
