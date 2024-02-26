@@ -2,20 +2,16 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface appSliceState {
   currentUser: {
-    username: string;
-    picture: string;
-    email: string;
+    username?: string;
+    picture?: string;
+    email?: string;
     savedCodes?: string[];
   };
   isLoggedIn: boolean;
 }
 
 const initialState: appSliceState = {
-  currentUser: {
-    username: "",
-    picture: "",
-    email: "",
-  },
+  currentUser: {},
   isLoggedIn: false,
 };
 

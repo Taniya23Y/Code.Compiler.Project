@@ -1,17 +1,22 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
+import { useLogoutMutation } from "@/redux/slices/api";
+import { updateIsLoggedIn } from "@/redux/slices/appSlice";
 
 export default function Header() {
+  const [logout, { isLoading }] = useLogoutMutation();
+  const dispatch = useDispatch();
   const isLoggedIn = -useSelector(
     (state: RootState) => state.appSlice.isLoggedIn
   );
 
-  async function handleLogout(){
+  async function handleLogout() {
     try {
-      console.log("object");
+      await logout().unwrap();
+      dispatch(updateIsLoggedIn(false));
     } catch (error) {
       handleError(error);
     }
@@ -29,8 +34,10 @@ export default function Header() {
         </li>
         {isLoggedIn ? (
           <>
-             <li>
-               <Button onClick={handleLogout} variant="destructive">Logout</Button>
+            <li>
+              <Button onClick={handleLogout} variant="destructive">
+                Logout
+              </Button>
             </li>
           </>
         ) : (
