@@ -15,26 +15,29 @@ import {
 } from "@/redux/slices/compilerSlice";
 import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  // DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { useSaveCodeMutation } from "@/redux/slices/api";
 
 export default function HelperHeader() {
-  const [saveLoading, setSaveLoading] = useState<boolean>(false);
+  // const [saveLoading, setSaveLoading] = useState<boolean>(false);
   const [shareBtn, setShareBtn] = useState<boolean>(false);
   const navigate = useNavigate();
   const fullCode = useSelector(
     (state: RootState) => state.compilerSlice.fullCode
   );
+  const [saveCode,{isLoading}] = useSaveCodeMutation();
+
   const { urlId } = useParams();
   useEffect(() => {
     if (urlId) {
@@ -44,17 +47,17 @@ export default function HelperHeader() {
     }
   }, [urlId]);
   const handleSaveCode = async () => {
-    setSaveLoading(true);
+    // setSaveLoading(true);
     try {
-      const response = await axios.post("http://localhost:4000/compiler/save", {
-        fullCode: fullCode,
-      });
+      // const response = await axios.post("http://localhost:4000/compiler/save", {
+      //   fullCode: fullCode,
+      // });
       // console.log(response.data);
-      navigate(`/compiler/${response.data.url}`, { replace: true });
+      const response = await saveCode(fullCode).unwrap();
+      // console.log(response);
+      navigate(`/compiler/${response.url}`, { replace: true })
     } catch (error) {
       handleError(error);
-    } finally {
-      setSaveLoading(false);
     }
   };
   const dispatch = useDispatch();
@@ -68,9 +71,9 @@ export default function HelperHeader() {
           onClick={handleSaveCode}
           className="flex justify-between items-center gap-1"
           variant="success"
-          disabled={saveLoading}
+          disabled={isLoading}
         >
-          {saveLoading ? (
+          {isLoading ? (
             <>
               <Loader2 className="animate-spin" /> Saving
             </>
@@ -93,8 +96,8 @@ export default function HelperHeader() {
                 <Code />
                 Share Your Code
               </DialogTitle>
-              <DialogDescription className="flex flex-col gap-2">
-                <div className="__url flex gap-1">
+              {/* <DialogDescription className="flex flex-col gap-2"> */}
+                <div className="__url flex justify-center items-center gap-1">
                   <input
                     type="text"
                     disabled
@@ -116,7 +119,7 @@ export default function HelperHeader() {
                 <p className="text-center">
                   Share this URL with your frds to Collaborate.
                 </p>
-              </DialogDescription>
+              {/* </DialogDescription> */}
             </DialogHeader>
           </DialogContent>
         </Dialog>

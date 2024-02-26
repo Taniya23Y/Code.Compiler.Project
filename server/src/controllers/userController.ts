@@ -70,7 +70,14 @@ export const login = async (req: Request, res: Response) => {
       sameSite: "lax",
     });
 
-    return res.status(200).send({ existingUser });
+    return res
+      .status(200)
+      .send({
+        username: existingUser.username,
+        picture: existingUser.picture,
+        email: existingUser.email,
+        savedCodes: existingUser.saveCodes,
+      });
   } catch (error) {
     return res.status(500).send({ message: "Error log in!", error: error });
   }

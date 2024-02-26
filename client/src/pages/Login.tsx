@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   userId: z.string(),
@@ -32,38 +33,49 @@ export default function Login() {
   }
 
   return (
-    <div className="__login grid-bg w-full h-[calc(100dvh-60px)] flex justify-center items-center">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="userId"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>Username</FormLabel> */}
-                <FormControl className="text-white">
-                  <Input placeholder="username or Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>Username</FormLabel> */}
-                <FormControl>
-                  <Input type="password" placeholder="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
+    <div className="__login grid-bg w-full h-[calc(100dvh-60px)] flex flex-col justify-center items-center gap-3">
+      <div className="__form_container bg-black border-[1px] py-8 px-4 flex flex-col gap-5 w-[300px]">
+        <div className="">
+          <h1 className="font-mono text-4xl font-bold text-left">Login</h1>
+          <p className="font-mono text-xs">Welcome back fellow coder 😁</p>
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleLogin)} className="flex flex-col gap-2">
+            <FormField
+              control={form.control}
+              name="userId"
+              render={({ field }) => (
+                <FormItem>
+                  {/* <FormLabel>Username</FormLabel> */}
+                  <FormControl className="text-white">
+                    <Input placeholder="username or Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  {/* <FormLabel>Username</FormLabel> */}
+                  <FormControl>
+                    <Input type="password" placeholder="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="w-full" type="submit">
+              Login
+            </Button>
+          </form>
+        </Form>
+        <small className="text-xs font-mono">
+          Don't have an account? <Link className="text-blue-500" to="/signup">Signup.</Link>
+        </small>
+      </div>
     </div>
   );
 }

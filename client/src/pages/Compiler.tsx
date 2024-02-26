@@ -6,31 +6,36 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { useLoadCodeMutation } from "@/redux/slices/api";
 import { updateFullCode } from "@/redux/slices/compilerSlice";
 import { handleError } from "@/utils/handleError";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 export default function Compiler() {
   // return <div>Compiler</div>;
   const { urlId } = useParams();
+  const [loadEXistingCode, { isLoading }] = useLoadCodeMutation();
   const dispatch = useDispatch();
 
   const loadCode = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/compiler/load", {
-        urlId: urlId,
-      });
-      dispatch(updateFullCode(response.data.fullCode));
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error?.response?.status === 500) {
-          toast("Invalid URL, default code Loaded");
-        }
+      // const response = await axios.post("http://localhost:4000/compiler/load", {
+      //   urlId: urlId,
+      // });
+      if (urlId) {
+        const response = await loadEXistingCode({ urlId }).unwrap();
+        dispatch(updateFullCode(response.fullCode));
       }
+    } catch (error) {
+      // if (axios.isAxiosError(error)) {
+      //   if (error?.response?.status === 500) {
+      //     toast("Invalid URL, default code Loaded");
+      //   }
+      // }
       handleError(error);
     }
   };
@@ -41,6 +46,14 @@ export default function Compiler() {
     }
   }, [urlId]);
 
+  if (isLoading)
+    return (
+      <div
+        className="w-full h-[calc(100dvh-60px)] flex justify-center items-center"
+      >
+        Loader
+      </div>
+    );
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel
