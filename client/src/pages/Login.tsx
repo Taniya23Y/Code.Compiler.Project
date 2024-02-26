@@ -25,7 +25,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-  const [login, {isLoading}] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,9 +40,9 @@ export default function Login() {
     // console.log(values);
     try {
       const response = await login(values).unwrap();
-     dispatch(updateCurrentUser(response));
-     dispatch(updateIsLoggedIn(true));
-     navigate("/");
+      dispatch(updateCurrentUser(response));
+      dispatch(updateIsLoggedIn(true));
+      navigate("/");
     } catch (error) {
       handleError(error);
     }
@@ -56,7 +56,10 @@ export default function Login() {
           <p className="font-mono text-xs">Welcome back fellow coder 😁</p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleLogin)} className="flex flex-col gap-2">
+          <form
+            onSubmit={form.handleSubmit(handleLogin)}
+            className="flex flex-col gap-2"
+          >
             <FormField
               control={form.control}
               name="userId"
@@ -64,7 +67,12 @@ export default function Login() {
                 <FormItem>
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl className="text-white">
-                    <Input disabled={isLoading} placeholder="username or Email" {...field} />
+                    <Input
+                      required
+                      disabled={isLoading}
+                      placeholder="username or Email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -77,19 +85,28 @@ export default function Login() {
                 <FormItem>
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl>
-                    <Input disabled={isLoading} type="password" placeholder="password" {...field} />
+                    <Input
+                    required
+                      disabled={isLoading}
+                      type="password"
+                      placeholder="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button loading={true} className="w-full" type="submit">
+            <Button loading={isLoading} className="w-full" type="submit">
               Login
             </Button>
           </form>
         </Form>
         <small className="text-xs font-mono">
-          Don't have an account? <Link className="text-blue-500" to="/signup">Signup.</Link>
+          Don't have an account?{" "}
+          <Link className="text-blue-500" to="/signup">
+            Signup.
+          </Link>
         </small>
       </div>
     </div>
