@@ -2,8 +2,13 @@
 
 //Users types
 interface userInfoType  {
-        username: string,
-        picture: string,
-        email: string,
-        savedCodes: Array<string>,
+        username: string;
+        picture: string;
+        email: string;
+        savedCodes: Array<string>;
+}
+
+interface loginCredentialsType{
+       userId: string; 
+       password: string 
 }

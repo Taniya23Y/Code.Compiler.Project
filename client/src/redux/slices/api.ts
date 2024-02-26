@@ -29,7 +29,7 @@ export const api = createApi({
         body: body,
       }),
     }),
-    login: builder.mutation<userInfoType, { userId: string; password: string }>(
+    login: builder.mutation<userInfoType, loginCredentialsType>(
       {
         query: (body) => ({
           url: "/user/login",
