@@ -5,6 +5,7 @@ import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import { useLogoutMutation } from "@/redux/slices/api";
 import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export default function Header() {
   const [logout, { isLoading }] = useLogoutMutation();
@@ -13,6 +14,9 @@ export default function Header() {
     (state: RootState) => state.appSlice.isLoggedIn
   );
 
+  const currentUser = useSelector(
+    (state:RootState) => state.appSlice.currentUser
+  )
   async function handleLogout() {
     try {
       await logout().unwrap();
@@ -30,15 +34,26 @@ export default function Header() {
       <ul className="flex gap-2">
         <li>
           <Link to="/compiler">
-            <Button loading={isLoading}>Compiler</Button>
+            <Button>Compiler</Button>
           </Link>
         </li>
         {isLoggedIn ? (
           <>
             <li>
-              <Button onClick={handleLogout} variant="destructive">
+              <Button
+                loading={isLoading}
+                onClick={handleLogout}
+                variant="destructive"
+              >
                 Logout
               </Button>
+            </li>
+            <li>
+              <Avatar>
+                {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                <AvatarImage src={currentUser.picture} />
+                <AvatarFallback className="capitalize">{currentUser.username?.slice(0,2)}</AvatarFallback>
+              </Avatar>
             </li>
           </>
         ) : (
