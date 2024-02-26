@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import { useLogoutMutation } from "@/redux/slices/api";
-import { updateIsLoggedIn } from "@/redux/slices/appSlice";
+import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
 
 export default function Header() {
   const [logout, { isLoading }] = useLogoutMutation();
@@ -17,6 +17,7 @@ export default function Header() {
     try {
       await logout().unwrap();
       dispatch(updateIsLoggedIn(false));
+      dispatch(updateCurrentUser({}));
     } catch (error) {
       handleError(error);
     }
@@ -29,7 +30,7 @@ export default function Header() {
       <ul className="flex gap-2">
         <li>
           <Link to="/compiler">
-            <Button>Compiler</Button>
+            <Button loading={isLoading}>Compiler</Button>
           </Link>
         </li>
         {isLoggedIn ? (
