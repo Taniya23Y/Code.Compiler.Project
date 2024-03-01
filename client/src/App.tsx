@@ -7,8 +7,15 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import { useEffect } from "react";
+import { useGetUserDetailsQuery } from "./redux/slices/api";
 
 function App() {
+  const {data, error} = useGetUserDetailsQuery();
+  useEffect(()=>{
+   console.log("data",data);
+   console.log("error",error);
+  },[data,error])
   return (
     <>
       <Toaster position="bottom-right" theme="dark"/>

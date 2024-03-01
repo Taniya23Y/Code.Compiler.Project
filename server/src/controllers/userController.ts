@@ -12,10 +12,10 @@ export const signup = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(400).send({ message: "User already exists!" });
     }
-    if (usernameRegex.test(username)) {
+    if (!usernameRegex.test(username)) {
       return res
         .status(400)
-        .send({ message: "Some character are not allowed!" });
+        .send({ message: "Some characters are not allowed!" });
     }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -24,7 +24,31 @@ export const signup = async (req: Request, res: Response) => {
       password: hashedPassword,
       username: username,
     });
-    return res.status(201).send({ user });
+
+    const jwtToken = jwt.sign(
+      {
+        _id: user._id,
+        email: user.email,
+      },
+      process.env.JWT_KEY!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("token", jwtToken, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    return res.status(201).send({
+      username: user.username,
+      picture: user.picture,
+      email: user.email,
+      savedCodes: user.saveCodes,
+    });
   } catch (error) {
     return res.status(500).send({ message: "Error signing up!", error: error });
   }
@@ -34,6 +58,7 @@ export const login = async (req: Request, res: Response) => {
   const { userId, password }: { userId: string; password: string } = req.body;
   try {
     let existingUser = undefined;
+
     if (userId.includes("@")) {
       existingUser = await User.findOne({ email: userId });
     } else {
@@ -96,17 +121,15 @@ export const userDetails = async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).send({ message: "cannot find the user!" });
+      return res.status(404).send({ message: "Cannot find the user!" });
     }
-    return res
-      .status(200)
-      .send({
-        username: user.username,
-        picture: user.picture,
-        email: user.email,
-        savedCodes: user.saveCodes,
-      });
+    return res.status(200).send({
+      username: user.username,
+      picture: user.picture,
+      email: user.email,
+      savedCodes: user.saveCodes,
+    });
   } catch (error) {
-    return res.status(500).send({ message: "cannot fetch user details" });
+    return res.status(500).send({ message: "Cannot fetch user details" });
   }
 };

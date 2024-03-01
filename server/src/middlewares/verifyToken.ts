@@ -5,7 +5,7 @@ export interface AuthRequest extends Request {
     _id?: string;
 }
 
-exports.verifyToken = async (
+export const verifyToken = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
