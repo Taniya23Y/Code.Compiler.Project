@@ -23,7 +23,7 @@ function App() {
       dispatch(updateCurrentUser({}));
       dispatch(updateIsLoggedIn(false));
     }
-  }, [data, error]);
+  }, [data, dispatch, error]);
   return (
     <>
       <Toaster position="bottom-right" theme="dark" />
