@@ -13,23 +13,20 @@ import { useDispatch } from "react-redux";
 import { updateCurrentUser, updateIsLoggedIn } from "./redux/slices/appSlice";
 
 function App() {
-  const {data, error} = useGetUserDetailsQuery();
+  const { data, error } = useGetUserDetailsQuery();
   const dispatch = useDispatch();
-  useEffect(()=>{
-    if(data){
+  useEffect(() => {
+    if (data) {
       dispatch(updateCurrentUser(data));
       dispatch(updateIsLoggedIn(true));
-    }
-    else if(error){
+    } else if (error) {
       dispatch(updateCurrentUser({}));
       dispatch(updateIsLoggedIn(false));
     }
-   console.log("data",data);
-   console.log("error",error);
-  },[data,error])
+  }, [data, error]);
   return (
     <>
-      <Toaster position="bottom-right" theme="dark"/>
+      <Toaster position="bottom-right" theme="dark" />
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Header />
         <Routes>

@@ -13,9 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleError } from "@/utils/handleError";
 import { useSignupMutation } from "@/redux/slices/api";
+import { useDispatch } from "react-redux";
+import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
 
 const formSchema = z.object({
   username: z.string(),
@@ -24,6 +26,8 @@ const formSchema = z.object({
 });
 
 export default function Signup() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [signup, { isLoading }] = useSignupMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,7 +41,9 @@ export default function Signup() {
     console.log(values);
     try {
       const response = await signup(values).unwrap();
-      console.log(response);
+      dispatch(updateCurrentUser(response));
+      dispatch(updateIsLoggedIn(true));
+      navigate("/");
     } catch (error) {
       handleError(error);
     }
@@ -64,7 +70,11 @@ export default function Signup() {
                 <FormItem>
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl className="text-white">
-                    <Input placeholder="username or Email" {...field} />
+                    <Input
+                      disabled={isLoading}
+                      placeholder="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -77,7 +87,12 @@ export default function Signup() {
                 <FormItem>
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl className="text-white">
-                    <Input type="email" placeholder="Email" {...field} />
+                    <Input
+                      disabled={isLoading}
+                      type="email"
+                      placeholder="Email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,13 +105,18 @@ export default function Signup() {
                 <FormItem>
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl>
-                    <Input type="password" placeholder="password" {...field} />
+                    <Input
+                      disabled={isLoading}
+                      type="password"
+                      placeholder="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" type="submit">
+            <Button loading={isLoading} className="w-full" type="submit">
               Signup
             </Button>
           </form>
