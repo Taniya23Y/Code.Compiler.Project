@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { handleError } from "@/utils/handleError";
+import { useSignupMutation } from "@/redux/slices/api";
 
 const formSchema = z.object({
   username: z.string(),
@@ -22,6 +24,7 @@ const formSchema = z.object({
 });
 
 export default function Signup() {
+  const [signup, { isLoading }] = useSignupMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,8 +33,14 @@ export default function Signup() {
       password: "",
     },
   });
-  function handleSignup(values: z.infer<typeof formSchema>) {
+  async function handleSignup(values: z.infer<typeof formSchema>) {
     console.log(values);
+    try {
+      const response = await signup(values).unwrap();
+      console.log(response);
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   return (
@@ -39,7 +48,9 @@ export default function Signup() {
       <div className="__form_container bg-black border-[1px] py-8 px-4 flex flex-col gap-5 w-[300px]">
         <div className="">
           <h1 className="font-mono text-4xl font-bold text-left">Signup</h1>
-          <p className="font-mono text-xs">Join the community of expert frontend developers 😁</p>
+          <p className="font-mono text-xs">
+            Join the community of expert frontend developers 😁
+          </p>
         </div>
         <Form {...form}>
           <form
@@ -91,7 +102,10 @@ export default function Signup() {
           </form>
         </Form>
         <small className="text-xs font-mono">
-          Already have an account? <Link className="text-blue-500" to="/login">Login.</Link>
+          Already have an account?{" "}
+          <Link className="text-blue-500" to="/login">
+            Login.
+          </Link>
         </small>
       </div>
     </div>

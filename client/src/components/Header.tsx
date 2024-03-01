@@ -50,8 +50,8 @@ export default function Header() {
             </li>
             <li>
               <Avatar>
-                {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-                <AvatarImage src={currentUser.picture} />
+                <AvatarImage className="h-[40px] w-full rounded-full" src="https://github.com/shadcn.png" />
+                {/* <AvatarImage className="h-[40px] w-full rounded-full" src={currentUser.picture} /> */}
                 <AvatarFallback className="capitalize">{currentUser.username?.slice(0,2)}</AvatarFallback>
               </Avatar>
             </li>

@@ -9,10 +9,21 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useEffect } from "react";
 import { useGetUserDetailsQuery } from "./redux/slices/api";
+import { useDispatch } from "react-redux";
+import { updateCurrentUser, updateIsLoggedIn } from "./redux/slices/appSlice";
 
 function App() {
   const {data, error} = useGetUserDetailsQuery();
+  const dispatch = useDispatch();
   useEffect(()=>{
+    if(data){
+      dispatch(updateCurrentUser(data));
+      dispatch(updateIsLoggedIn(true));
+    }
+    else if(error){
+      dispatch(updateCurrentUser({}));
+      dispatch(updateIsLoggedIn(false));
+    }
    console.log("data",data);
    console.log("error",error);
   },[data,error])
