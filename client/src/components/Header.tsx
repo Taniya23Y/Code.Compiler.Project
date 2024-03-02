@@ -5,7 +5,8 @@ import { RootState } from "@/redux/store";
 import { handleError } from "@/utils/handleError";
 import { useLogoutMutation } from "@/redux/slices/api";
 import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+// import { updateIsOwner } from "@/redux/slices/compilerSlice";
 
 export default function Header() {
   const [logout, { isLoading }] = useLogoutMutation();
@@ -13,15 +14,15 @@ export default function Header() {
   const isLoggedIn = -useSelector(
     (state: RootState) => state.appSlice.isLoggedIn
   );
-
   const currentUser = useSelector(
-    (state:RootState) => state.appSlice.currentUser
-  )
+    (state: RootState) => state.appSlice.currentUser
+  );
   async function handleLogout() {
     try {
       await logout().unwrap();
       dispatch(updateIsLoggedIn(false));
       dispatch(updateCurrentUser({}));
+      // dispatch(updateIsOwner(false));
     } catch (error) {
       handleError(error);
     }
@@ -60,9 +61,10 @@ export default function Header() {
             </li>
             <li>
               <Avatar>
-                <AvatarImage className="h-[40px] w-full rounded-full" src="https://github.com/shadcn.png" />
-                {/* <AvatarImage className="h-[40px] w-full rounded-full" src={currentUser.picture} /> */}
-                <AvatarFallback className="capitalize">{currentUser.username?.slice(0,2)}</AvatarFallback>
+                <AvatarImage src={currentUser.picture} />
+                <AvatarFallback className="capitalize">
+                  {currentUser.username?.slice(0, 2)}
+                </AvatarFallback>
               </Avatar>
             </li>
           </>
@@ -75,7 +77,7 @@ export default function Header() {
             </li>
             <li>
               <Link to="/signup">
-                <Button variant="blue">signup</Button>
+                <Button variant="blue">Signup</Button>
               </Link>
             </li>
           </>
