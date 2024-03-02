@@ -113,7 +113,7 @@ export default function HelperHeader() {
     try {
       if (urlId) {
         await editCode({ fullCode, id: urlId }).unwrap();
-        toast("Code Updated Successully!");
+        toast("Code Updated Successfully!");
       }
     } catch (error) {
       handleError(error);
