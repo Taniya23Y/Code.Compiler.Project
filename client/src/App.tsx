@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Compiler from "./pages/Compiler";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useGetUserDetailsQuery } from "./redux/slices/api";
 import { useDispatch } from "react-redux";
 import { updateCurrentUser, updateIsLoggedIn } from "./redux/slices/appSlice";
+// import AllRoutes from "./AllRoutes";
 
 function App() {
   const { data, error } = useGetUserDetailsQuery();
@@ -33,11 +34,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/Compiler" element={<Compiler />} /> */}
-          {/* <Route path="/Compiler/:urlId" element={<Compiler />} /> */}
+          <Route path="/Compiler" element={<Compiler />} />
+          <Route path="/Compiler/:urlId" element={<Compiler />} />
           <Route path="/Compiler/:urlId?" element={<Compiler />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {/* <AllRoutes /> */}
       </ThemeProvider>
     </>
   );
