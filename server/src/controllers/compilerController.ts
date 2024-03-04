@@ -1,11 +1,11 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { Code } from "../models/Code";
 import { fullCodeType } from "../types/compilerTypes";
 import { AuthRequest } from "../middlewares/verifyTokenAnonymous";
 import { User } from "../models/User";
 
 export const saveCode = async (req: AuthRequest, res: Response) => {
-  const fullCode: fullCodeType = req.body;
+  const { fullCode, title }: { fullCode: fullCodeType; title: string } = req.body;
   let ownerName = "Anonymous";
   let user = undefined;
   let ownerInfo = undefined;
@@ -28,9 +28,11 @@ export const saveCode = async (req: AuthRequest, res: Response) => {
       fullCode: fullCode,
       ownerName: ownerName,
       ownerInfo: ownerInfo,
+      title:title,
     });
-    if(isAuthenticated){
-      user.savedCodes.push(newCode._id)
+    if(isAuthenticated && user){
+      user.saveCodes.push(newCode._id)
+      await user.save();
     }
     return res.status(201).send({ url: newCode._id, status: "saved" });
   } catch (error) {

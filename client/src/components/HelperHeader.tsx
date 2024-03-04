@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  CompilerSliceStateType,
+  compilerSliceStateType,
   updateCurrentLanguage,
 } from "@/redux/slices/compilerSlice";
 import { RootState } from "@/redux/store";
@@ -221,7 +221,7 @@ export default function HelperHeader() {
           onValueChange={(value) =>
             dispatch(
               updateCurrentLanguage(
-                value as CompilerSliceStateType["currentLanguage"]
+                value as compilerSliceStateType["currentLanguage"]
               )
             )
           }
