@@ -5,7 +5,7 @@ interface IUserSchema {
   email: string;
   password: string;
   picture: string;
-  saveCodes: Array<{ _id: string }>;
+  saveCodes: Array<mongoose.Types.ObjectId>;
 }
 
 const UserSchema = new mongoose.Schema<IUserSchema>(
@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema<IUserSchema>(
         "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png",
     },
     saveCodes: {
-      type: [{ type: mongoose.Schema.Types.ObjectId }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref:"Code"}],
     },
   },
   { timestamps: true }
