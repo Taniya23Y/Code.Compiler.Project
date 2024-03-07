@@ -7,7 +7,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useLoadCodeMutation } from "@/redux/slices/api";
-import { updateFullCode } from "@/redux/slices/compilerSlice";
+import { updateFullCode, updateIsOwner } from "@/redux/slices/compilerSlice";
 import { handleError } from "@/utils/handleError";
 // import axios from "axios";
 import { useEffect } from "react";
@@ -29,6 +29,7 @@ export default function Compiler() {
       if (urlId) {
         const response = await loadEXistingCode({ urlId }).unwrap();
         dispatch(updateFullCode(response.fullCode));
+        dispatch(updateIsOwner(response.isOwner));
       }
     } catch (error) {
       // if (axios.isAxiosError(error)) {
