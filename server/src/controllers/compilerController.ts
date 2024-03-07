@@ -5,8 +5,7 @@ import { AuthRequest } from "../middlewares/verifyToken";
 import { User } from "../models/User";
 
 export const saveCode = async (req: AuthRequest, res: Response) => {
-  const { fullCode, title }: { fullCode: fullCodeType; title: string } =
-    req.body;
+  const { fullCode, title }: { fullCode: fullCodeType; title: string } = req.body;
   let ownerName = "Anonymous";
   let user = undefined;
   let ownerInfo = undefined;
