@@ -15,9 +15,5 @@
       "src": "/(.*)",
       "dest": "/src/index.ts"
     }
-  ],
-  "env": {
-    "MONGO_URI": "@mongo-uri",
-    "JWT_KEY": "@jwt-key"
-  }
+  ]
 }
