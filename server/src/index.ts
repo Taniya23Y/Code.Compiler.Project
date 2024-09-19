@@ -7,6 +7,9 @@ import { userRoutes } from "./routes/userRoutes";
 import cookieParser from "cookie-parser";
 const app = express();
 
+// setting up port number
+const PORT = process.env.PORT || 4000;
+
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
@@ -30,6 +33,10 @@ app.get("/", (req, res) => {
 });
 
 dbConnect();
-app.listen(4000, () => {
-  console.log("http://localhost:4000");
+// app.listen(4000, () => {
+//   console.log("http://localhost:4000");
+// });
+
+app.listen(PORT, () => {
+  console.log(`App is listening at ${PORT}`);
 });
