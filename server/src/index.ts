@@ -4,12 +4,18 @@ import { config } from "dotenv";
 import { dbConnect } from "./lib/dbConnect";
 import { compilerRouter } from "./routes/compilerRouter";
 import { userRoutes } from "./routes/userRoutes";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({credentials:true,origin:"http://localhost:5173"}));
+// app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://code-compiler-project.vercel.app",
+  })
+);
 config();
 
 app.use("/compiler", compilerRouter);
