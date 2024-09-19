@@ -67,7 +67,7 @@ export const api = createApi({
         url: `/compiler/delete/${_id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["myCodes","allCodes"],
+      invalidatesTags: ["myCodes", "allCodes"],
     }),
     editCode: builder.mutation<
       void,
