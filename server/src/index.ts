@@ -13,7 +13,10 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://code-compiler-project.vercel.app",
+    origin: [
+      "https://code-compiler-project.vercel.app",
+      "http://localhost:5173",
+    ],
   })
 );
 config();
