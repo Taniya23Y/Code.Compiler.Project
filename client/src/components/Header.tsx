@@ -33,7 +33,7 @@ export default function Header() {
   }
 
   return (
-    <nav className="w-full h-[70px] p-3 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-opacity-50 backdrop-blur-md shadow-lg flex justify-between items-center text-white rounded-lg">
+    <nav className="w-full h-[70px] p-3 border-b-[0.1px] bg-opacity-50 backdrop-blur-md shadow-lg flex justify-between items-center text-white  relative">
       {/* Logo */}
       <Link to="/" className="font-bold text-xl tracking-wider select-none">
         Code.Compiler
@@ -47,8 +47,8 @@ export default function Header() {
       </div>
       <ul
         className={`md:flex items-center gap-6 ${
-          isMenuOpen ? "block" : "hidden"
-        } absolute md:static top-[70px] md:top-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-opacity-50 backdrop-blur-md w-full md:w-auto rounded-lg shadow-md md:shadow-none`}
+          isMenuOpen ? "block z-50" : "hidden"
+        } absolute md:static top-[70px] md:top-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-opacity-50 backdrop-blur-md w-full md:w-auto rounded-lg shadow-md md:shadow-none transition-all duration-300 z-50`}
       >
         <li>
           <Link to="/">
@@ -89,8 +89,8 @@ export default function Header() {
             <li>
               <Avatar>
                 <AvatarImage
-                  className="h-[40px] w-[40px] rounded-full"
-                  src={currentUser.picture || "https://github.com/shadcn.png"}
+                  className="h-[40px] w-full rounded-full"
+                  src="https://github.com/shadcn.png"
                 />
                 <AvatarFallback className="capitalize">
                   {currentUser.username?.slice(0, 2)}

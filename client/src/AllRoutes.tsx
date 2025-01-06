@@ -1,6 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader/Loader";
+import Feature from "./pages/Feature";
+import Contact from "./pages/ContactUs";
+import About from "./components/About";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -21,6 +24,9 @@ export default function AllRoutes() {
     >
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/features" element={<Feature />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/all-codes" element={<AllCodes />} />

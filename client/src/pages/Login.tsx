@@ -86,7 +86,7 @@ export default function Login() {
                   {/* <FormLabel>Username</FormLabel> */}
                   <FormControl>
                     <Input
-                    required
+                      required
                       disabled={isLoading}
                       type="password"
                       placeholder="password"
