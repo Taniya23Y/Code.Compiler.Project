@@ -15,7 +15,6 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [file, setFile] = useState(null);
 
   const [emailError, setEmailError] = useState("");
   const [messageError, setMessageError] = useState("");
@@ -67,7 +66,6 @@ export default function Contact() {
         setPhone("");
         setSubject("");
         setMessage("");
-        setFile(null);
         (event.target as HTMLFormElement).reset();
         setTimeout(() => setResult(""), 5000);
       } else {
